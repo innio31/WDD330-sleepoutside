@@ -11,7 +11,22 @@ renderBreadcrumbs([
 const checkout = new CheckoutProcess();
 checkout.calculateItemSubtotal();
 
-// Once the user enters a zip code, calculate the rest
 document.querySelector("#zip").addEventListener("blur", () => {
   checkout.calculateOrderTotal();
 });
+
+document
+  .querySelector("#checkout-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    checkout.calculateOrderTotal();
+
+    const form = event.target;
+    const response = await checkout.checkout(form);
+    if (response) {
+      localStorage.removeItem("so-cart");
+      console.log("Order placed:", response);
+      window.location.href = "/index.html";
+    }
+  });

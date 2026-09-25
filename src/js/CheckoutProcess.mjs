@@ -1,4 +1,17 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, formDataToJSON } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
+
+const services = new ExternalServices();
+
+function packageItems(items) {
+  // convert each cart item to the shape the server expects
+  return items.map((item) => ({
+    id: item.Id,
+    name: item.Name,
+    price: item.FinalPrice,
+    quantity: 1,
+  }));
+}
 
 export default class CheckoutProcess {
   constructor() {
@@ -8,14 +21,12 @@ export default class CheckoutProcess {
     this.orderTotal = 0;
   }
 
-  // Called on page load — calculates and displays the item subtotal
   calculateItemSubtotal() {
     const cart = getLocalStorage("so-cart") || [];
     this.subtotal = cart.reduce((sum, item) => sum + item.FinalPrice, 0);
     document.querySelector("#subtotal").textContent = this.subtotal.toFixed(2);
   }
 
-  // Called after zip is entered — calculates tax, shipping, and order total
   calculateOrderTotal() {
     const cart = getLocalStorage("so-cart") || [];
     const itemCount = cart.length;
@@ -28,5 +39,24 @@ export default class CheckoutProcess {
     document.querySelector("#shipping").textContent = this.shipping.toFixed(2);
     document.querySelector("#order-total").textContent =
       this.orderTotal.toFixed(2);
+  }
+
+  async checkout(form) {
+    const order = formDataToJSON(form);
+    const cart = getLocalStorage("so-cart") || [];
+
+    order.orderDate = new Date().toISOString();
+    order.orderTotal = this.orderTotal.toFixed(2);
+    order.tax = this.tax.toFixed(2);
+    order.shipping = this.shipping;
+    order.items = packageItems(cart);
+
+    try {
+      const response = await services.checkout(order);
+      console.log("Order response:", response);
+      return response;
+    } catch (err) {
+      console.error("Checkout error:", err);
+    }
   }
 }

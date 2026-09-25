@@ -79,3 +79,11 @@ export function renderBreadcrumbs(trail) {
     '<span class="breadcrumb-separator">&gt;</span>',
   );
 }
+export function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+  formData.forEach((value, key) => {
+    convertedJSON[key] = value;
+  });
+  return convertedJSON;
+}
