@@ -1,12 +1,10 @@
 import { getLocalStorage, renderListWithTemplate } from "./utils.mjs";
 
 function cartItemTemplate(item) {
+  const image = item.Images?.PrimaryMedium || item.Image || "";
   return `<li class="cart-card divider">
     <a href="/product_pages/index.html?product=${item.Id}" class="cart-card__image">
-      <img
-        src="${item.Image.replace("../", "/")}"
-        alt="${item.Name}"
-      />
+      <img src="${image}" alt="${item.Name}" />
     </a>
     <a href="/product_pages/index.html?product=${item.Id}">
       <h2 class="card__name">${item.Name}</h2>

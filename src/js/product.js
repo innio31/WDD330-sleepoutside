@@ -3,11 +3,11 @@ import {
   setLocalStorage,
   getLocalStorage,
   loadHeaderFooter,
+  renderBreadcrumbs,
 } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 
-
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 
 function productDetailsTemplate(product) {
   const isDiscounted = product.FinalPrice < product.ListPrice;
@@ -26,7 +26,7 @@ function productDetailsTemplate(product) {
     ${discountFlag}
     <img
       class="divider"
-      src="${product.Image.replace("../", "/")}"
+      src="${product.Images.PrimaryLarge}"
       alt="${product.Name}"
     />
     ${priceMarkup}
@@ -40,7 +40,6 @@ function productDetailsTemplate(product) {
 function addProductToCart(product) {
   const cart = getLocalStorage("so-cart") || [];
   if (!Array.isArray(cart)) {
-    // migrate any previously-saved single object into an array
     setLocalStorage("so-cart", [cart, product]);
     return;
   }
@@ -52,12 +51,28 @@ function addToCartHandler(product) {
   addProductToCart(product);
 }
 
+function capitalize(str) {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 async function init() {
   const productId = getParam("product");
   const product = await dataSource.findProductById(productId);
 
   const productDetail = document.querySelector(".product-detail");
   productDetail.innerHTML = productDetailsTemplate(product);
+
+  renderBreadcrumbs([
+    { label: "Home", href: "/index.html" },
+    {
+      label: `Products: ${capitalize(product.Category)}`,
+      href: `/product_listing/index.html?category=${product.Category}`,
+    },
+    { label: product.NameWithoutBrand },
+  ]);
 
   document
     .getElementById("addToCart")
