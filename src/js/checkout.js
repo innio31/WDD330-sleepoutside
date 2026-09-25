@@ -1,4 +1,8 @@
-import { loadHeaderFooter, renderBreadcrumbs } from "./utils.mjs";
+import {
+  loadHeaderFooter,
+  renderBreadcrumbs,
+  alertMessage,
+} from "./utils.mjs";
 import CheckoutProcess from "./CheckoutProcess.mjs";
 
 loadHeaderFooter();
@@ -23,10 +27,28 @@ document
     checkout.calculateOrderTotal();
 
     const form = event.target;
-    const response = await checkout.checkout(form);
-    if (response) {
+    try {
+      await checkout.checkout(form);
       localStorage.removeItem("so-cart");
-      console.log("Order placed:", response);
-      window.location.href = "/index.html";
+      window.location.href = "/checkout/success.html";
+    } catch (err) {
+      let message = "There was a problem processing your order.";
+
+      if (err && err.message) {
+        const body = err.message;
+
+        if (typeof body === "string") {
+          message = body;
+        } else if (body.message) {
+          message = body.message;
+        } else if (typeof body === "object") {
+          // server returns { fieldName: "error message", ... }
+          message = Object.values(body)
+            .filter((v) => typeof v === "string")
+            .join(" ");
+        }
+      }
+
+      alertMessage(message, true);
     }
   });

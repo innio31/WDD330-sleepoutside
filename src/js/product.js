@@ -4,6 +4,7 @@ import {
   getLocalStorage,
   loadHeaderFooter,
   renderBreadcrumbs,
+  alertMessage,
 } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
@@ -49,6 +50,7 @@ function addProductToCart(product) {
 
 function addToCartHandler(product) {
   addProductToCart(product);
+  alertMessage(`${product.Name} added to cart`, true);
 }
 
 function capitalize(str) {

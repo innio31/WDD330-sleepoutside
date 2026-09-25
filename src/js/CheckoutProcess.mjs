@@ -4,7 +4,6 @@ import ExternalServices from "./ExternalServices.mjs";
 const services = new ExternalServices();
 
 function packageItems(items) {
-  // convert each cart item to the shape the server expects
   return items.map((item) => ({
     id: item.Id,
     name: item.Name,
@@ -53,10 +52,10 @@ export default class CheckoutProcess {
 
     try {
       const response = await services.checkout(order);
-      console.log("Order response:", response);
       return response;
     } catch (err) {
       console.error("Checkout error:", err);
+      throw err;
     }
   }
 }
