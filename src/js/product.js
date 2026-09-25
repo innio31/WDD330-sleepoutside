@@ -6,8 +6,7 @@ import {
 } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 
-
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 
 function productDetailsTemplate(product) {
   const isDiscounted = product.FinalPrice < product.ListPrice;
@@ -26,7 +25,7 @@ function productDetailsTemplate(product) {
     ${discountFlag}
     <img
       class="divider"
-      src="${product.Image.replace("../", "/")}"
+      src="${product.Images.PrimaryLarge}"
       alt="${product.Name}"
     />
     ${priceMarkup}
@@ -40,7 +39,6 @@ function productDetailsTemplate(product) {
 function addProductToCart(product) {
   const cart = getLocalStorage("so-cart") || [];
   if (!Array.isArray(cart)) {
-    // migrate any previously-saved single object into an array
     setLocalStorage("so-cart", [cart, product]);
     return;
   }

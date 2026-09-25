@@ -289,3 +289,37 @@ footer {
   color: #d33;
   font-weight: bold;
 }
+
+/* Category links on home page */
+.categories {
+  padding: 1rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.15s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+}
+
+.category-card img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0.5rem;
+}
