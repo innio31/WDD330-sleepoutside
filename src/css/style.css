@@ -323,3 +323,28 @@ footer {
   height: 64px;
   margin-bottom: 0.5rem;
 }
+/* Breadcrumbs */
+.breadcrumbs {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.breadcrumbs a {
+  color: #2a6;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs .breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: #999;
+}
+
+.breadcrumbs .breadcrumb-current {
+  color: #333;
+  font-weight: bold;
+}

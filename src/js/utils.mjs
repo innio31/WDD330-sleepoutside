@@ -63,3 +63,19 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
+export function renderBreadcrumbs(trail) {
+  // trail is an array of { label, href } — href is optional (last item usually has none)
+  const element = document.querySelector("#breadcrumbs");
+  if (!element) return;
+
+  const items = trail.map((item, index) => {
+    if (item.href && index < trail.length - 1) {
+      return `<a href="${item.href}">${item.label}</a>`;
+    }
+    return `<span class="breadcrumb-current">${item.label}</span>`;
+  });
+
+  element.innerHTML = items.join(
+    '<span class="breadcrumb-separator">&gt;</span>',
+  );
+}

@@ -3,6 +3,7 @@ import {
   setLocalStorage,
   getLocalStorage,
   loadHeaderFooter,
+  renderBreadcrumbs,
 } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 
@@ -50,12 +51,28 @@ function addToCartHandler(product) {
   addProductToCart(product);
 }
 
+function capitalize(str) {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 async function init() {
   const productId = getParam("product");
   const product = await dataSource.findProductById(productId);
 
   const productDetail = document.querySelector(".product-detail");
   productDetail.innerHTML = productDetailsTemplate(product);
+
+  renderBreadcrumbs([
+    { label: "Home", href: "/index.html" },
+    {
+      label: `Products: ${capitalize(product.Category)}`,
+      href: `/product_listing/index.html?category=${product.Category}`,
+    },
+    { label: product.NameWithoutBrand },
+  ]);
 
   document
     .getElementById("addToCart")
