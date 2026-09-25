@@ -348,3 +348,85 @@ footer {
   color: #333;
   font-weight: bold;
 }
+/* Cart total + checkout button */
+.cart-total {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.checkout-button {
+  display: block;
+  width: fit-content;
+  margin: 1rem 0 0 auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #2a6;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.checkout-button:hover {
+  background-color: #1e4d48;
+}
+/* Checkout form */
+#checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+#checkout-form fieldset {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+#checkout-form legend {
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
+
+#checkout-form label {
+  display: block;
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+
+#checkout-form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#checkout-form input:valid:focus {
+  border-color: #2a6;
+  outline: none;
+}
+
+#checkout-form input:invalid:focus {
+  border-color: #d33;
+  outline: none;
+}
+
+/* Order summary */
+.order-summary {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.order-summary .order-total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}

@@ -23,9 +23,18 @@ export default class ShoppingCart {
   init() {
     const cartItems = getLocalStorage("so-cart") || [];
     this.renderList(cartItems);
+    this.calculateTotal(cartItems);
   }
 
   renderList(list) {
     renderListWithTemplate(cartItemTemplate, this.listElement, list);
+  }
+
+  calculateTotal(list) {
+    const total = list.reduce((sum, item) => sum + item.FinalPrice, 0);
+    const totalElement = document.querySelector("#cart-total");
+    if (totalElement) {
+      totalElement.textContent = total.toFixed(2);
+    }
   }
 }
