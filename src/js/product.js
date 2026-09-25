@@ -4,14 +4,26 @@ import ProductData from "./ProductData.mjs";
 const dataSource = new ProductData("tents");
 
 function productDetailsTemplate(product) {
+  const isDiscounted = product.FinalPrice < product.ListPrice;
+  const discountFlag = isDiscounted
+    ? `<span class="product__discount">Sale!</span>`
+    : "";
+  const priceMarkup = isDiscounted
+    ? `<p class="product-card__price">
+         <span class="product__original-price">$${product.ListPrice}</span>
+         <span class="product__final-price">$${product.FinalPrice}</span>
+       </p>`
+    : `<p class="product-card__price">$${product.FinalPrice}</p>`;
+
   return `<h3>${product.Brand.Name}</h3>
     <h2 class="divider">${product.NameWithoutBrand}</h2>
+    ${discountFlag}
     <img
       class="divider"
       src="${product.Image.replace("../", "/")}"
       alt="${product.Name}"
     />
-    <p class="product-card__price">$${product.FinalPrice}</p>
+    ${priceMarkup}
     <p class="product__color">${product.Colors[0].ColorName}</p>
     <p class="product__description">${product.DescriptionHtmlSimple}</p>
     <div class="product-detail__add">

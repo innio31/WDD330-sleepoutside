@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -260,4 +260,32 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+/* Product discount flag */
+.product__discount {
+  display: inline-block;
+  background-color: #d33;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.25em 0.75em;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5em;
+}
+
+/* Original (list) price, crossed out */
+.product__original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 0.5em;
+  font-weight: normal;
+}
+
+/* Discounted price emphasized */
+.product__final-price {
+  color: #d33;
+  font-weight: bold;
 }
